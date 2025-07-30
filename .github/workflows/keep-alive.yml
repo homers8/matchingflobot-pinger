@@ -2,14 +2,13 @@ name: ⏰ Keep Render Bot Alive
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Alle 5 Minuten
-  workflow_dispatch:        # Optional: manuelles Auslösen über GitHub
+    - cron: '*/5 * * * *'    # Alle 5 Minuten ausführen
+  workflow_dispatch:         # Manuelles Starten weiterhin möglich
 
 jobs:
-  ping-render:
+  ping:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📡 Ping POST to Render
-        run: |
-          curl -X POST https://matchingflobot.onrender.com/webhook -H "Content-Type: application/json" -d '{}'
+      - name: 🔁 Ping Render App
+        run: curl -s https://matchingflobot.onrender.com/ > /dev/null
