@@ -10,5 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🔁 Ping Render App
-        run: curl -s https://matchingflobot.onrender.com/ > /dev/null
+     - name: 🔁 Ping Render App
+  run: |
+    curl -s -o /dev/null -w "%{http_code}" https://matchingflobot.onrender.com/
