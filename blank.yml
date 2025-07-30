@@ -1,3 +1,0 @@
-git add .github/workflows/keep-alive.yml
-git commit -m "🔁 GitHub Action zum Wachhalten des Render-Bots"
-git push
