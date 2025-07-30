@@ -2,22 +2,21 @@ name: ⏰ Keep Render Bot Alive
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Alle 5 Minuten
-  workflow_dispatch:       # Manuelles Starten erlaubt
+    - cron: "*/5 * * * *"     # Alle 5 Minuten
+  workflow_dispatch:          # Manuelles Starten bleibt möglich
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: 🔁 Ping Render App
+      - name: ⏳ Pinge https://matchingflobot.onrender.com/
         run: |
           echo "⏳ Pinge https://matchingflobot.onrender.com/"
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://matchingflobot.onrender.com/)
           echo "🌐 HTTP-Statuscode: $STATUS"
-
-          if [ "$STATUS" -ne 200 ]; then
-            echo "❌ Render-App antwortet nicht korrekt!"
+          if [ "$STATUS" -eq "200" ]; then
+            echo "✅ Render-App ist erreichbar."
+          else
+            echo "❌ Render-App antwortet nicht korrekt."
             exit 1
           fi
-
-          echo "✅ Render-App ist erreichbar."
