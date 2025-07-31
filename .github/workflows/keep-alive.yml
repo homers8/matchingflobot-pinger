@@ -1,22 +1,33 @@
-name: ⏰ Keep Render Bot Alive
+name: 🔁 Keep Render App Alive
 
 on:
   schedule:
-    - cron: "*/5 * * * *"     # Alle 5 Minuten
-  workflow_dispatch:          # Manuelles Starten bleibt möglich
+    - cron: "*/3 * * * *" # Alle 3 Minuten
+  workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: ⏳ Pinge https://matchingflobot.onrender.com/
+      - name: 🔁 Pinge Render mit echtem Telegram-Dummy
         run: |
-          echo "⏳ Pinge https://matchingflobot.onrender.com/"
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://matchingflobot.onrender.com/)
-          echo "🌐 HTTP-Statuscode: $STATUS"
-          if [ "$STATUS" -eq "200" ]; then
-            echo "✅ Render-App ist erreichbar."
-          else
-            echo "❌ Render-App antwortet nicht korrekt."
-            exit 1
-          fi
+          echo "🔁 Sende echten Ping an /webhook"
+          curl -X POST https://matchingflobot.onrender.com/webhook \
+            -H "Content-Type: application/json" \
+            -d '{
+              "update_id": 1,
+              "message": {
+                "message_id": 1,
+                "from": {
+                  "id": 999999,
+                  "is_bot": false,
+                  "first_name": "KeepAliveBot"
+                },
+                "chat": {
+                  "id": 999999,
+                  "type": "private"
+                },
+                "date": 1631022240,
+                "text": "/start"
+              }
+            }'
