@@ -9,10 +9,14 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: 🔁 Pinge Render mit echtem Telegram-Dummy
+      - name: 🔁 Sende Pings an Render
         run: |
-          echo "🔁 Sende echten Ping an /webhook"
-          curl -X POST https://matchingflobot.onrender.com/webhook \
+          echo "🌐 GET /"
+          curl -s -o /dev/null -w "%{http_code}" https://matchingflobot.onrender.com/
+
+          echo ""
+          echo "🌐 POST /webhook mit realistischem Telegram-Dummy"
+          curl -s -o /dev/null -w "%{http_code}" -X POST https://matchingflobot.onrender.com/webhook \
             -H "Content-Type: application/json" \
             -d '{
               "update_id": 1,
@@ -31,3 +35,6 @@ jobs:
                 "text": "/start"
               }
             }'
+
+          echo ""
+          echo "✅ Beide Pings gesendet"
